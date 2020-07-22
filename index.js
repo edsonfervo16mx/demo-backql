@@ -11,6 +11,11 @@ app.get("/", function (request, response) {
     /**/
     Model.Empresa.create({ name: 'rancho aguacate', description: 'rancho', logo: 'aguacate.png', location: 'Comalcalco', rfc: 'agua1234', slogan: 'aguacate', mail: 'aguacate@mail.com', telephone: '93312134545', website: 'aguacate.mx' })
     /**/
+
+    /**/
+    Model.Invitacion.create({ name: 'FI', expiration: '2020-07-22', empresaId: '1' })
+    /**/
+
     console.log(process.env.APP_MESSAGE_SUCCESS)
 })
 console.log('Backql en http://localhost:' + process.env.APP_PORT)

@@ -24,10 +24,12 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       situation: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'available'
       },
       state: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'active'
       },
       createdAt: {
         allowNull: false,
