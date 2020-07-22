@@ -21,7 +21,7 @@ app.get("/", function(request, response) {
   //Update
   /*
     Model.Invitacion.update({ name: 'FIU' }, { where: { id: 3 } })
-    /**/
+  /**/
 
   //Select All
   /*
@@ -35,7 +35,30 @@ app.get("/", function(request, response) {
     });
   /**/
 
-  console.log(data);
+  //SelectAllPersonalized
+  /*
+  var data = [];
+  Model.Invitacion.findAll({ limit: 1, lock: true })
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  /**/
+
+  //SelectFind
+  /**/
+  var data = [];
+  Model.Invitacion.findAll({ where: { id: 1 } })
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  /**/
+
   console.log(process.env.APP_MESSAGE_SUCCESS);
 });
 console.log("Backql en http://localhost:" + process.env.APP_PORT);
