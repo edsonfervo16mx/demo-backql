@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Empresa.init({
     name: DataTypes.STRING,
-    descripcion: DataTypes.STRING,
+    description: DataTypes.STRING,
     logo: DataTypes.STRING,
     location: DataTypes.STRING,
     rfc: DataTypes.STRING,
