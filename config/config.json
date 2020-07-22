@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "edsonfer",
+    "password": "hack1024",
+    "database": "mydbbackql",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "edsonfer",
+    "password": "hack1024",
+    "database": "mydbbackql",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "edsonfer",
+    "password": "hack1024",
+    "database": "mydbbackql",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

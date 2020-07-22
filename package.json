@@ -1,0 +1,24 @@
+{
+  "name": "demo-backql",
+  "version": "1.0.0",
+  "description": "apitest with sequelize, express, graphql",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "sequelize",
+    "graphql",
+    "mysql"
+  ],
+  "author": "edsonfervo16mx",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.3.3",
+    "sequelize-cli": "^6.2.0"
+  }
+}

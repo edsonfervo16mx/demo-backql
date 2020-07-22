@@ -1,0 +1,3 @@
+npx sequelize model:generate --name Empresa --attributes name:string,description:string,logo:string,location:string,rfc:string,slogan:string,mail:string,telephone:string,website:string,situation:string,state:string
+
+npx sequelize model:generate --name Invitacion --attributes name:string,expiration:date,empresaId:integer,situation:string,state:string
