@@ -48,7 +48,7 @@ app.get("/", function(request, response) {
   /**/
 
   //SelectFind
-  /**/
+  /*
   var data = [];
   Model.Invitacion.findAll({ where: { id: 1 } })
     .then((data) => {
@@ -58,6 +58,21 @@ app.get("/", function(request, response) {
       console.log(err);
     });
   /**/
+
+  /*******************************TEST MODELS SEQUELIZE********************************/
+  //Falta implementar la encriptacion del password
+  /*
+  Model.Usuario.create({
+    name: "edsonfer",
+    email: "edson55_@hotmail.com",
+    password: "123",
+    code: "1991",
+    photo: "profile.png",
+    empresaId: "1",
+  });
+  */
+
+  /*******************************TEST MODELS SEQUELIZE********************************/
 
   console.log(process.env.APP_MESSAGE_SUCCESS);
 });
