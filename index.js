@@ -60,6 +60,7 @@ app.get("/", function(request, response) {
   /**/
 
   /*******************************TEST MODELS SEQUELIZE********************************/
+  //Usuario
   //Falta implementar la encriptacion del password
   /*
   Model.Usuario.create({
@@ -71,6 +72,15 @@ app.get("/", function(request, response) {
     empresaId: "1",
   });
   */
+
+  //TipoUsuario
+  /*
+  Model.TipoUsuario.create({
+    name: "admin",
+    description: "admin",
+    badge: "admin-ico",
+  });
+  /**/
 
   /*******************************TEST MODELS SEQUELIZE********************************/
 
