@@ -11,3 +11,5 @@ npx sequelize model:generate --name Privilegio --attributes name:string,descript
 npx sequelize model:generate --name RelTipoUsuarioPrivilegio --attributes description:string,tipousuarioId:integer,privilegioId:integer,situation:string,state:string
 
 npx sequelize model:generate --name Perfil --attributes description:string,usuarioId:integer,situation:string,state:string
+
+npx sequelize model:generate --name RelPerfilPrivilegio --attributes description:string,perfilId:integer,privilegioId:integer,situation:string,state:string

@@ -107,6 +107,16 @@ app.get("/", function(request, response) {
     usuarioId: "1",
   });
   /**/
+
+  //RelPerfilPrivilegio
+  /*
+  Model.RelPerfilPrivilegio.create({
+    description: "DEFAULT",
+    perfilId: "1",
+    privilegioId: "1",
+  });
+  /**/
+
   /*******************************TEST MODELS SEQUELIZE********************************/
 
   console.log(process.env.APP_MESSAGE_SUCCESS);
