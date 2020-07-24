@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("RelTipoUsuarioPrivilegios", {
+    await queryInterface.createTable("Perfils", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,19 +11,10 @@ module.exports = {
       description: {
         type: Sequelize.STRING,
       },
-      tipousuarioId: {
+      usuarioId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "TipoUsuarios",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
-      privilegioId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Privilegios",
+          model: "Usuarios",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -48,6 +39,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("RelTipoUsuarioPrivilegios");
+    await queryInterface.dropTable("Perfils");
   },
 };

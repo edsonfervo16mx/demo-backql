@@ -82,6 +82,31 @@ app.get("/", function(request, response) {
   });
   /**/
 
+  //Privilegio
+  /*
+  Model.Privilegio.create({
+    name: "moduleUsuario",
+    description: "modulo de usuarios",
+    badge: "users-ico",
+  });
+  /**/
+
+  //RelTipoUsuarioPrivilegio
+  /*
+  Model.RelTipoUsuarioPrivilegio.create({
+    description: "DEFAULT",
+    tipousuarioId: "1",
+    privilegioId: "1",
+  });
+  /**/
+
+  //Perfil
+  /*
+  Model.Perfil.create({
+    description: "DEFAULT",
+    usuarioId: "1",
+  });
+  /**/
   /*******************************TEST MODELS SEQUELIZE********************************/
 
   console.log(process.env.APP_MESSAGE_SUCCESS);
