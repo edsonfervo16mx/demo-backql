@@ -2,7 +2,67 @@ require("dotenv").config();
 var express = require("express");
 var app = express();
 
+//Sequelize
 var Model = require("./models/index");
+
+//Express-graphql
+const { graphqlHTTP } = require("express-graphql");
+
+//Graphql
+var { buildSchema } = require("graphql");
+
+//Schema Graphql
+var schema = require("./schema/schema");
+var Data = [];
+//Example
+/*
+var clientes = [];
+var counter = 1;
+/**/
+
+var root = {
+  empresas: () => {
+    Model.Empresa.findAll()
+      .then((Data) => {
+        /*
+        console.log("***************");
+        console.log(Data);
+        console.log("***************");
+        console.log(Data[0]);
+        console.log("***************");
+        console.log(Data[0]["dataValues"]);
+        console.log("***************");
+        console.log(Data[0]["dataValues"].id);
+        /**/
+        console.log(Data[0]["dataValues"]);
+        return Data[0]["dataValues"];
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+
+  //Example
+  /*
+  clientes: () => {
+    return clientes;
+  },
+
+  cliente: (data) => {
+    for (var i = 0; i < clientes.length; i++)
+      if (clientes[i].id == data.id) return clientes[i];
+
+    return null;
+  },
+
+  addCliente: (data) => {
+    var c = { id: counter, nombre: data.nombre, telefono: data.telefono };
+    clientes.push(c);
+    counter++;
+    return c;
+  },
+  /**/
+};
 
 app.get("/", function(request, response) {
   console.log(process.env.APP_MESSAGE_SUCCESS);
@@ -10,17 +70,31 @@ app.get("/", function(request, response) {
   /** Example **/
   //Insert
   /*
-    Model.Empresa.create({ name: 'rancho aguacate', description: 'rancho', logo: 'aguacate.png', location: 'Comalcalco', rfc: 'agua1234', slogan: 'aguacate', mail: 'aguacate@mail.com', telephone: '93312134545', website: 'aguacate.mx' })
-    /**/
+  Model.Empresa.create({
+    name: "rancho aguacate",
+    description: "rancho",
+    logo: "aguacate.png",
+    location: "Comalcalco",
+    rfc: "agua1234",
+    slogan: "aguacate",
+    mail: "aguacate@mail.com",
+    telephone: "93312134545",
+    website: "aguacate.mx",
+  });
+  /**/
 
   /*
-    //time + 5hrs
-    Model.Invitacion.create({ name: 'FI', expiration: '2020-07-22 11:45:00', empresaId: '1' })
-    /**/
+  //time + 5hrs
+  Model.Invitacion.create({
+    name: "FI",
+    expiration: "2020-07-22 11:45:00",
+    empresaId: "1",
+  });
+  /**/
 
   //Update
   /*
-    Model.Invitacion.update({ name: 'FIU' }, { where: { id: 3 } })
+  Model.Invitacion.update({ name: "FIU" }, { where: { id: 1 } });
   /**/
 
   //Select All
@@ -71,7 +145,7 @@ app.get("/", function(request, response) {
     photo: "profile.png",
     empresaId: "1",
   });
-  */
+  /**/
 
   //TipoUsuario
   /*
@@ -121,5 +195,15 @@ app.get("/", function(request, response) {
 
   console.log(process.env.APP_MESSAGE_SUCCESS);
 });
+
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  })
+);
+
 console.log("Backql en http://localhost:" + process.env.APP_PORT);
 app.listen(process.env.APP_PORT);
