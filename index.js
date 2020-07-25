@@ -13,38 +13,61 @@ var { buildSchema } = require("graphql");
 
 //Schema Graphql
 var schema = require("./schema/schema");
-var Data = [];
+//var Data = [];
+var DataResponse = [];
 //Example
-/*
+/** 
 var clientes = [];
 var counter = 1;
 /**/
 
 var root = {
+  /** */
   empresas: () => {
+    /**/
     Model.Empresa.findAll()
       .then((Data) => {
-        /*
-        console.log("***************");
-        console.log(Data);
-        console.log("***************");
-        console.log(Data[0]);
-        console.log("***************");
-        console.log(Data[0]["dataValues"]);
-        console.log("***************");
-        console.log(Data[0]["dataValues"].id);
-        /**/
-        console.log(Data[0]["dataValues"]);
-        return Data[0]["dataValues"];
+        try {
+          var counter = 0;
+          Data.forEach((element) => {
+            DataResponse[counter] = Data[counter]["dataValues"];
+            counter++;
+          });
+          console.log(DataResponse);
+          return DataResponse;
+        } catch (err) {
+          console.log(err);
+          return false;
+        }
       })
       .catch((err) => {
         console.log(err);
       });
+    /**/
+    return DataResponse;
   },
+
+  addEmpresa: () => {
+    var requestAttr = {
+      name: "tomato",
+      logo: "tomato.png",
+      location: "tulum",
+      rfc: "0002",
+      slogan: "tomatomx",
+      mail: "tomato@mail.com",
+      telephone: "999999",
+      website: "tomato.com",
+    };
+    DataResponse.push(requestAttr);
+    return requestAttr;
+  },
+
+  /**/
 
   //Example
   /*
   clientes: () => {
+    console.log(clientes);
     return clientes;
   },
 
