@@ -24,27 +24,23 @@ var counter = 1;
 var root = {
   /** */
   empresas: () => {
+    /** */
+
     /**/
-    Model.Empresa.findAll()
+    return Model.Empresa.findAll()
       .then((Data) => {
-        try {
-          var counter = 0;
-          Data.forEach((element) => {
-            DataResponse[counter] = Data[counter]["dataValues"];
-            counter++;
-          });
-          console.log(DataResponse);
-          return DataResponse;
-        } catch (err) {
-          console.log(err);
-          return false;
-        }
+        var counter = 0;
+        Data.forEach((element) => {
+          DataResponse[counter] = Data[counter]["dataValues"];
+          counter++;
+        });
+        console.log(DataResponse);
+        return DataResponse;
       })
       .catch((err) => {
         console.log(err);
+        return false;
       });
-    /**/
-    return DataResponse;
   },
 
   addEmpresa: () => {
