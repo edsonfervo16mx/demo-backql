@@ -51,6 +51,38 @@ var root = {
       console.log(err);
     }
   },
+
+  updateEmpresa: async (DataRequest) => {
+    let Data = await Model.Empresa.update(
+      {
+        name: DataRequest.name,
+        description: DataRequest.description,
+        logo: DataRequest.logo,
+        location: DataRequest.location,
+        rfc: DataRequest.rfc,
+        slogan: DataRequest.slogan,
+        mail: DataRequest.mail,
+        telephone: DataRequest.telephone,
+        website: DataRequest.website,
+      },
+      { where: { id: DataRequest.id } }
+    );
+
+    let DataResult = await Model.Empresa.findAll({
+      where: { id: DataRequest.id },
+    });
+
+    try {
+      var counter = 0;
+      DataResult.forEach((element) => {
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 
 app.get("/", function(request, response) {
