@@ -13,74 +13,44 @@ var { buildSchema } = require("graphql");
 
 //Schema Graphql
 var schema = require("./schema/schema");
-//var Data = [];
+
 var DataResponse = [];
-//Example
-/** 
-var clientes = [];
-var counter = 1;
-/**/
 
 var root = {
-  /** */
-  empresas: () => {
-    /** */
-
-    /**/
-    return Model.Empresa.findAll()
-      .then((Data) => {
-        var counter = 0;
-        Data.forEach((element) => {
-          DataResponse[counter] = Data[counter]["dataValues"];
-          counter++;
-        });
-        console.log(DataResponse);
-        return DataResponse;
-      })
-      .catch((err) => {
-        console.log(err);
-        return false;
+  empresas: async () => {
+    let Data = await Model.Empresa.findAll();
+    try {
+      var counter = 0;
+      Data.forEach((element) => {
+        DataResponse[counter] = Data[counter]["dataValues"];
+        counter++;
       });
+      console.log(DataResponse);
+      return DataResponse;
+    } catch (err) {
+      console.log(err);
+    }
   },
 
-  addEmpresa: () => {
-    var requestAttr = {
-      name: "tomato",
-      logo: "tomato.png",
-      location: "tulum",
-      rfc: "0002",
-      slogan: "tomatomx",
-      mail: "tomato@mail.com",
-      telephone: "999999",
-      website: "tomato.com",
-    };
-    DataResponse.push(requestAttr);
-    return requestAttr;
+  addEmpresa: async (DataRequest) => {
+    let Data = await Model.Empresa.create({
+      name: DataRequest.name,
+      description: DataRequest.description,
+      logo: DataRequest.logo,
+      location: DataRequest.location,
+      rfc: DataRequest.rfc,
+      slogan: DataRequest.slogan,
+      mail: DataRequest.mail,
+      telephone: DataRequest.telephone,
+      website: DataRequest.website,
+    });
+
+    try {
+      return Data;
+    } catch (err) {
+      console.log(err);
+    }
   },
-
-  /**/
-
-  //Example
-  /*
-  clientes: () => {
-    console.log(clientes);
-    return clientes;
-  },
-
-  cliente: (data) => {
-    for (var i = 0; i < clientes.length; i++)
-      if (clientes[i].id == data.id) return clientes[i];
-
-    return null;
-  },
-
-  addCliente: (data) => {
-    var c = { id: counter, nombre: data.nombre, telefono: data.telefono };
-    clientes.push(c);
-    counter++;
-    return c;
-  },
-  /**/
 };
 
 app.get("/", function(request, response) {
