@@ -17,6 +17,7 @@ var schema = require("./schema/schema");
 var DataResponse = [];
 
 var root = {
+  //--------------------------------------------
   empresas: async () => {
     let Data = await Model.Empresa.findAll();
     try {
@@ -82,6 +83,53 @@ var root = {
     } catch (err) {
       console.log(err);
     }
+  },
+
+  //------------------------------------------
+  invitaciones: async () => {
+    let join = "Empresa";
+    var infoJoin = [];
+    let Data = await Model.Invitacion.findAll({
+      include: [
+        {
+          model: Model.Empresa,
+        },
+      ],
+    });
+
+    /**/
+    try {
+      var counter = 0;
+      Data.forEach((element) => {
+        //Data[counter]["dataValues"].Empresa = DataResponse[counter].Empresa["dataValues"];
+        //infoJoin[counter] = Data[counter]["dataValues"].Empresa["dataValues"];
+        Data[counter]["dataValues"].Empresa =
+          Data[counter]["dataValues"].Empresa["dataValues"];
+        DataResponse[counter] = Data[counter]["dataValues"];
+        //DataResponse[counter] = Data[counter]["dataValues"];
+        //console.log(DataResponse[counter].Empresa["dataValues"]);
+        /*
+        console.log(Data[counter]["dataValues"].Empresa);
+        console.log("++++++++++++++++++");
+        console.log(Data[counter]["dataValues"].Empresa["dataValues"]);
+        console.log("++++++++++++++++++");
+        /**/
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      //console.log(Data[0]["dataValues"].Empresa["dataValues"].name);
+
+      return DataResponse;
+    } catch (err) {
+      console.log(err);
+    }
+    /**/
+    //console.log(Data);
+    //console.log("*********");
+    //console.log(Data[0]["dataValues"].Empresa["dataValues"].name);
+    //return Data;
   },
 };
 

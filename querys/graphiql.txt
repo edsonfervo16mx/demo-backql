@@ -1,0 +1,99 @@
+
+mutation {
+  addEmpresa(
+    name: "Lechuga"
+    description: "lechuga"
+    logo: "lechuga.png"
+    location: "Comalcalco"
+    rfc: "0001"
+    slogan: "lechuga"
+    mail: "lechuga@mail.com"
+    telephone: "9331567533"
+    website: "lechuga.mx"
+  ) {
+    id
+    name
+  }
+}
+
+mutation {
+  addEmpresa(
+    name: "Aguacate"
+    description: "Aguacate"
+    logo: "Aguacate.png"
+    location: "Villahermosa"
+    rfc: "0002"
+    slogan: "Aguacate"
+    mail: "aguacate@mail.com"
+    telephone: "987404040"
+    website: "aguacate.mx"
+  ) {
+    id
+    name
+  }
+}
+
+mutation {
+  addEmpresa(
+    name: "Coco"
+    description: "coco"
+    logo: "coco.png"
+    location: "Paraiso"
+    rfc: "0004"
+    slogan: "Coco"
+    mail: "coco@mail.com"
+    telephone: "987404040"
+    website: "coco.mx"
+  ) {
+    id
+    name
+  }
+}
+
+mutation {
+  updateEmpresa(
+    id: 3
+    name: "Coco"
+    description: "coco"
+    logo: "coco.png"
+    location: "Paraiso"
+    rfc: "0004"
+    slogan: "Coco"
+    mail: "coco@mail.com"
+    telephone: "987404040"
+    website: "coco.mx"
+  ) {
+    id
+    name
+  }
+}
+
+{
+  empresas {
+    id
+    name
+    logo
+    mail
+    telephone
+  }
+}
+
+
+{
+  invitaciones {
+    id
+    expiration
+    empresaId
+  }
+}
+
+{
+  invitaciones {
+    id
+    expiration
+    empresaId
+    empresa{
+      name
+    }
+  }
+}
