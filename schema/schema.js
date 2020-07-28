@@ -42,7 +42,7 @@ var schema = buildSchema(`
         name: String
         expiration: DateTime
         empresaId: Int
-        empresa:[Empresa]
+        Empresa:Empresa
         situation: String
         state: String
     }

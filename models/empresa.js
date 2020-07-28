@@ -15,8 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         as: "Invitacions",
       });
       /**/
-
-      //Empresa.belongsTo(models.Invitacion);
     }
   }
   Empresa.init(
