@@ -35,6 +35,15 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+      tipoUsuarioId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "TipoUsuarios",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
       situation: {
         type: Sequelize.STRING,
         defaultValue: "available",

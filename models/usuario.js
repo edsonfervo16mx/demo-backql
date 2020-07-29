@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Usuario.belongsTo(models.Empresa, { foreignKey: "empresaId" });
+      //Usuario.belongsTo(models.Empresa, { foreignKey: "empresaId" });
+      Usuario.belongsTo(models.Empresa);
+      Usuario.belongsTo(models.TipoUsuario);
     }
   }
   Usuario.init(
@@ -20,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       code: DataTypes.INTEGER,
       photo: DataTypes.STRING,
       empresaId: DataTypes.INTEGER,
+      tipoUsuarioId: DataTypes.INTEGER,
       situation: DataTypes.STRING,
       state: DataTypes.STRING,
     },

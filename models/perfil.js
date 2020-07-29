@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Perfil.belongsTo(models.Usuario, { foreignKey: "usuarioId" });
+      Perfil.belongsTo(models.Usuario);
+      Perfil.hasMany(models.RelPerfilPrivilegio, {
+        foreignKey: "perfilId",
+        as: "RelPerfilPrivilegios",
+      });
     }
   }
   Perfil.init(

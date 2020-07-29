@@ -9,18 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      RelTipoUsuarioPrivilegio.belongsTo(models.TipoUsuario, {
-        foreignKey: "tipousuarioId",
-      });
-      RelTipoUsuarioPrivilegio.belongsTo(models.Privilegio, {
-        foreignKey: "privilegioId",
-      });
+      RelTipoUsuarioPrivilegio.belongsTo(models.TipoUsuario);
+      RelTipoUsuarioPrivilegio.belongsTo(models.Privilegio);
     }
   }
   RelTipoUsuarioPrivilegio.init(
     {
       description: DataTypes.STRING,
-      tipousuarioId: DataTypes.INTEGER,
+      tipoUsuarioId: DataTypes.INTEGER,
       privilegioId: DataTypes.INTEGER,
       situation: DataTypes.STRING,
       state: DataTypes.STRING,
