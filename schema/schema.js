@@ -47,6 +47,15 @@ var schema = buildSchema(`
         state: String
     }
 
+    type TipoUsuario{
+      id: Int
+      name: String
+      description: String
+      badge: String
+      situation: String
+      state: String
+    }
+
     type Usuario {
       id: Int
       name: String
@@ -63,12 +72,15 @@ var schema = buildSchema(`
     type Query{
         empresas: [Empresa]
         invitaciones: [Invitacion]
+        tipousuarios: [TipoUsuario]
         usuarios: [Usuario]
     }
 
     type Mutation{
         addEmpresa(name: String, description: String, logo: String, location: String, rfc: String, slogan: String, mail: String, telephone: String, website: String): Empresa
         updateEmpresa(id: Int, name: String, description: String, logo: String, location: String, rfc: String, slogan: String, mail: String, telephone: String, website: String): Empresa
+        addInvitacion(name: String, expiration: DateTime, empresaId: Int) : Invitacion
+        addTipoUsuario(name: String, description: String, badge: String ): TipoUsuario
     }
 
     

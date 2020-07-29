@@ -114,6 +114,20 @@ var root = {
       console.log(err);
     }
   },
+
+  addInvitacion: async (DataRequest) => {
+    let Data = await Model.Invitacion.create({
+      name: DataRequest.name,
+      expiration: DataRequest.expiration,
+      empresaId: DataRequest.empresaId,
+    });
+
+    try {
+      return Data;
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 
 app.get("/", function(request, response) {

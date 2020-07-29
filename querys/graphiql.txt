@@ -91,9 +91,11 @@ mutation {
   invitaciones {
     id
     expiration
-    empresaId
-    empresa{
+    state
+    Empresa{
+      id
       name
+      description
     }
   }
 }
