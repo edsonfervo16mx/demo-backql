@@ -223,3 +223,19 @@ mutation {
     situation
   }
 }
+
+
+{
+  usuarios {
+    id
+    name
+    email
+    code
+    photo
+    Empresa{
+      id
+      name
+      description
+    }
+  }
+}

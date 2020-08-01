@@ -322,6 +322,22 @@ var root = {
       console.log(err);
     }
   },
+
+  //------------------------------------------------------
+  usuarios: async () => {
+    let Data = await Model.Usuario.findAll();
+    try {
+      var counter = 0;
+      Data.forEach((element) => {
+        DataResponse[counter] = Data[counter]["dataValues"];
+        counter++;
+      });
+      console.log(DataResponse);
+      return DataResponse;
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 
 module.exports = root;
