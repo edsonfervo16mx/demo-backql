@@ -47,6 +47,7 @@ mutation {
   ) {
     id
     name
+    description
   }
 }
 
@@ -118,6 +119,7 @@ mutation {
     id: 1
     expiration: "2020-08-01 10:02:00"
     empresaId: 1
+    situation: "no available"
   ) {
     id
     expiration
@@ -133,6 +135,91 @@ mutation {
   tipousuarios {
     id
     name
+    description
+    badge
   }
 }
 
+mutation {
+  addTipoUsuario(
+    name: "ADMINISTRADOR"
+    description: "ADMINISTRADOR"
+    badge: "icon-admin"
+
+  ) {
+    id
+    name
+    description
+    badge
+  }
+}
+
+mutation {
+  addTipoUsuario(
+    name: "GESTOR"
+    description: "GESTOR"
+    badge: "icon-gestor"
+
+  ) {
+    id
+    name
+    description
+    badge
+  }
+}
+
+
+mutation {
+  updateTipoUsuario(
+    id: 1
+    name: "ADMIN"
+    description: "ADMIN"
+    situation: "no available"
+  ) {
+    id
+    name
+    description
+  }
+}
+
+
+{
+  privilegios {
+    id
+    name
+    description
+    badge
+  }
+}
+
+
+mutation {
+  addPrivilegio(
+    name: "Invitacion"
+    description: "Modulo de invitacion"
+    badge: "icon-mod-invitacion"
+
+  ) {
+    id
+    name
+    description
+    badge
+  }
+}
+
+
+mutation {
+  updatePrivilegio(
+    id: 2
+    name: "Perfil"
+    description: "Modulo de perfiles"
+    badge: "icon-mod-perfil"
+    situation: "no available"
+  ) {
+    id
+    name
+    description
+    badge
+    situation
+  }
+}

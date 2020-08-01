@@ -56,6 +56,15 @@ var schema = buildSchema(`
       state: String
     }
 
+    type Privilegio{
+      id: Int
+      name: String
+      description: String
+      badge: String
+      situation: String
+      state: String
+    }
+
     type Usuario {
       id: Int
       name: String
@@ -73,16 +82,19 @@ var schema = buildSchema(`
         empresas: [Empresa]
         invitaciones: [Invitacion]
         tipousuarios: [TipoUsuario]
+        privilegios: [Privilegio]
         usuarios: [Usuario]
     }
 
     type Mutation{
         addEmpresa(name: String, description: String, logo: String, location: String, rfc: String, slogan: String, mail: String, telephone: String, website: String): Empresa
-        updateEmpresa(id: Int, name: String, description: String, logo: String, location: String, rfc: String, slogan: String, mail: String, telephone: String, website: String): Empresa
+        updateEmpresa(id: Int, name: String, description: String, logo: String, location: String, rfc: String, slogan: String, mail: String, telephone: String, website: String, situation: String, state: String): Empresa
         addInvitacion(name: String, expiration: DateTime, empresaId: Int) : Invitacion
-        updateInvitacion(id: Int,name: String, expiration: DateTime, empresaId: Int) : Invitacion
+        updateInvitacion(id: Int,name: String, expiration: DateTime, empresaId: Int, situation: String, state: String) : Invitacion
         addTipoUsuario(name: String, description: String, badge: String ): TipoUsuario
-        updateTipoUsuario(id: Int,name: String, description: String, badge: String ): TipoUsuario
+        updateTipoUsuario(id: Int,name: String, description: String, badge: String,situation: String, state: String ): TipoUsuario
+        addPrivilegio(name: String, description: String, badge: String ): Privilegio
+        updatePrivilegio(id: Int, name: String, description: String, badge: String,situation: String, state: String  ): Privilegio
     }
 
     

@@ -30,8 +30,18 @@ var root = {
       website: DataRequest.website,
     });
 
+    let DataResult = await Model.Empresa.findAll({
+      where: { id: Data.id },
+    });
+
     try {
-      return Data;
+      var counter = 0;
+      DataResult.forEach((element) => {
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      console.log(DataResponse);
+      return DataResponse[0];
     } catch (err) {
       console.log(err);
     }
@@ -49,6 +59,8 @@ var root = {
         mail: DataRequest.mail,
         telephone: DataRequest.telephone,
         website: DataRequest.website,
+        situation: DataRequest.situation,
+        state: DataRequest.state,
       },
       { where: { id: DataRequest.id } }
     );
@@ -142,6 +154,8 @@ var root = {
         name: DataRequest.name,
         expiration: DataRequest.expiration,
         empresaId: DataRequest.empresaId,
+        situation: DataRequest.situation,
+        state: DataRequest.state,
       },
       { where: { id: DataRequest.id } }
     );
@@ -184,6 +198,126 @@ var root = {
       });
       console.log(DataResponse);
       return DataResponse;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  addTipoUsuario: async (DataRequest) => {
+    let Data = await Model.TipoUsuario.create({
+      name: DataRequest.name,
+      description: DataRequest.description,
+      badge: DataRequest.badge,
+    });
+
+    let DataResult = await Model.TipoUsuario.findAll({
+      where: { id: Data.id },
+    });
+
+    try {
+      var counter = 0;
+      DataResult.forEach((element) => {
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      console.log(DataResponse);
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  updateTipoUsuario: async (DataRequest) => {
+    let Data = await Model.TipoUsuario.update(
+      {
+        name: DataRequest.name,
+        description: DataRequest.description,
+        badge: DataRequest.badge,
+        situation: DataRequest.situation,
+        state: DataRequest.state,
+      },
+      { where: { id: DataRequest.id } }
+    );
+
+    let DataResult = await Model.TipoUsuario.findAll({
+      where: { id: DataRequest.id },
+    });
+
+    try {
+      var counter = 0;
+      DataResult.forEach((element) => {
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  //------------------------------------------------------
+  privilegios: async () => {
+    let Data = await Model.Privilegio.findAll();
+    try {
+      var counter = 0;
+      Data.forEach((element) => {
+        DataResponse[counter] = Data[counter]["dataValues"];
+        counter++;
+      });
+      console.log(DataResponse);
+      return DataResponse;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  addPrivilegio: async (DataRequest) => {
+    let Data = await Model.Privilegio.create({
+      name: DataRequest.name,
+      description: DataRequest.description,
+      badge: DataRequest.badge,
+    });
+
+    let DataResult = await Model.Privilegio.findAll({
+      where: { id: Data.id },
+    });
+
+    try {
+      var counter = 0;
+      DataResult.forEach((element) => {
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      console.log(DataResponse);
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  updatePrivilegio: async (DataRequest) => {
+    let Data = await Model.Privilegio.update(
+      {
+        name: DataRequest.name,
+        description: DataRequest.description,
+        badge: DataRequest.badge,
+        situation: DataRequest.situation,
+        state: DataRequest.state,
+      },
+      { where: { id: DataRequest.id } }
+    );
+
+    let DataResult = await Model.Privilegio.findAll({
+      where: { id: DataRequest.id },
+    });
+
+    try {
+      var counter = 0;
+      DataResult.forEach((element) => {
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      return DataResponse[0];
     } catch (err) {
       console.log(err);
     }
