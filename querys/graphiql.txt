@@ -52,16 +52,16 @@ mutation {
 
 mutation {
   updateEmpresa(
-    id: 3
-    name: "Coco"
-    description: "coco"
-    logo: "coco.png"
-    location: "Paraiso"
-    rfc: "0004"
-    slogan: "Coco"
-    mail: "coco@mail.com"
-    telephone: "987404040"
-    website: "coco.mx"
+    id: 1
+    name: "Lechuga"
+    description: "lechuga edit"
+    logo: "lechuga.png"
+    location: "Comalcalco"
+    rfc: "0001"
+    slogan: "lechuga"
+    mail: "lechuga@mail.com"
+    telephone: "9331567533"
+    website: "lechuga.mx"
   ) {
     id
     name
@@ -99,3 +99,40 @@ mutation {
     }
   }
 }
+
+mutation {
+  addInvitacion(
+    name: "FI"
+    expiration: "2020-07-29 10:00:00"
+    empresaId: 1
+
+  ) {
+    id
+    name
+  }
+}
+
+
+mutation {
+  updateInvitacion(
+    id: 1
+    expiration: "2020-08-01 10:02:00"
+    empresaId: 1
+  ) {
+    id
+    expiration
+    Empresa{
+      id
+      name
+    }
+  }
+}
+
+
+{
+  tipousuarios {
+    id
+    name
+  }
+}
+

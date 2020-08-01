@@ -103,7 +103,7 @@ var root = {
           Data[counter]["dataValues"].Empresa["dataValues"];
 
         DataResponse[counter] = Data[counter]["dataValues"];
-        console.log(Data[counter]["dataValues"].Empresa);
+        //console.log(Data[counter]["dataValues"].Empresa);
         counter++;
       });
       console.log("**********");
@@ -122,8 +122,84 @@ var root = {
       empresaId: DataRequest.empresaId,
     });
 
+    let DataResult = await Model.Invitacion.findAll({
+      where: { id: Data.id },
+      include: [
+        {
+          model: Model.Empresa,
+        },
+      ],
+    });
+
     try {
-      return Data;
+      var counter = 0;
+      //console.log(Data);
+      console.log(Data.id);
+      DataResult.forEach((element) => {
+        DataResult[counter]["dataValues"].Empresa =
+          DataResult[counter]["dataValues"].Empresa["dataValues"];
+
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        //console.log(DataResult[counter]["dataValues"].Empresa);
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  updateInvitacion: async (DataRequest) => {
+    let Data = await Model.Invitacion.update(
+      {
+        name: DataRequest.name,
+        expiration: DataRequest.expiration,
+        empresaId: DataRequest.empresaId,
+      },
+      { where: { id: DataRequest.id } }
+    );
+
+    let DataResult = await Model.Invitacion.findAll({
+      where: { id: DataRequest.id },
+      include: [
+        {
+          model: Model.Empresa,
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      Data.forEach((element) => {
+        DataResult[counter]["dataValues"].Empresa =
+          DataResult[counter]["dataValues"].Empresa["dataValues"];
+
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        //console.log(DataResult[counter]["dataValues"].Empresa);
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  //------------------------------------------------------
+  tipousuarios: async () => {
+    let Data = await Model.TipoUsuario.findAll();
+    try {
+      var counter = 0;
+      Data.forEach((element) => {
+        DataResponse[counter] = Data[counter]["dataValues"];
+        counter++;
+      });
+      console.log(DataResponse);
+      return DataResponse;
     } catch (err) {
       console.log(err);
     }

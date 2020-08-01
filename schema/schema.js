@@ -80,7 +80,9 @@ var schema = buildSchema(`
         addEmpresa(name: String, description: String, logo: String, location: String, rfc: String, slogan: String, mail: String, telephone: String, website: String): Empresa
         updateEmpresa(id: Int, name: String, description: String, logo: String, location: String, rfc: String, slogan: String, mail: String, telephone: String, website: String): Empresa
         addInvitacion(name: String, expiration: DateTime, empresaId: Int) : Invitacion
+        updateInvitacion(id: Int,name: String, expiration: DateTime, empresaId: Int) : Invitacion
         addTipoUsuario(name: String, description: String, badge: String ): TipoUsuario
+        updateTipoUsuario(id: Int,name: String, description: String, badge: String ): TipoUsuario
     }
 
     
