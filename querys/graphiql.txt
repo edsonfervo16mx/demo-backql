@@ -346,3 +346,34 @@ mutation {
     }
   }
 }
+
+
+mutation {
+  updatePerfil(
+    id: 4
+    description: "PREDETERMINADO EDIT"
+    usuarioId: 2
+    situation: "available"
+    state:"inactive"
+  ) {
+    id
+    description
+    usuarioId
+    situation
+    state
+    Usuario{
+      id
+      name
+      email
+      Empresa{
+        id
+        name
+      }
+      TipoUsuario{
+        id
+        name
+        description
+      }
+    }
+  }
+}

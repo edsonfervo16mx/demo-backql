@@ -109,6 +109,7 @@ var schema = buildSchema(`
         addUsuario(name: String, email: String, password: String, code: Int, photo: String, empresaId: Int, tipoUsuarioId: Int): Usuario
         updateUsuario(id: Int,name: String, email: String, password: String, code: Int, photo: String, empresaId: Int, tipoUsuarioId: Int,situation: String, state: String ): Usuario
         addPerfil(description: String,usuarioId: Int): Perfil
+        updatePerfil(id: Int, description: String,usuarioId: Int,situation: String, state: String): Perfil
     }
 
     

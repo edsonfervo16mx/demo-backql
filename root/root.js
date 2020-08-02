@@ -521,6 +521,52 @@ var root = {
       console.log(err);
     }
   },
+
+  updatePerfil: async (DataRequest) => {
+    let Data = await Model.Perfil.update(
+      {
+        description: DataRequest.description,
+        usuarioId: DataRequest.usuarioId,
+        situation: DataRequest.situation,
+        state: DataRequest.state,
+      },
+      { where: { id: DataRequest.id } }
+    );
+
+    let DataResult = await Model.Perfil.findAll({
+      where: { id: DataRequest.id },
+      include: [
+        {
+          model: Model.Usuario,
+          include: [
+            {
+              model: Model.TipoUsuario,
+            },
+            {
+              model: Model.Empresa,
+            },
+          ],
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      DataResult.forEach((element) => {
+        DataResult[counter]["dataValues"].Usuario =
+          DataResult[counter]["dataValues"].Usuario["dataValues"];
+
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 
 module.exports = root;
