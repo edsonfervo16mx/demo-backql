@@ -325,7 +325,16 @@ var root = {
 
   //------------------------------------------------------
   usuarios: async () => {
-    let Data = await Model.Usuario.findAll();
+    let Data = await Model.Usuario.findAll({
+      include: [
+        {
+          model: Model.Empresa,
+        },
+        {
+          model: Model.TipoUsuario,
+        },
+      ],
+    });
     try {
       var counter = 0;
       Data.forEach((element) => {
@@ -334,6 +343,180 @@ var root = {
       });
       console.log(DataResponse);
       return DataResponse;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  addUsuario: async (DataRequest) => {
+    let Data = await Model.Usuario.create({
+      name: DataRequest.name,
+      email: DataRequest.email,
+      password: DataRequest.password,
+      code: DataRequest.code,
+      photo: DataRequest.photo,
+      empresaId: DataRequest.empresaId,
+      tipoUsuarioId: DataRequest.tipoUsuarioId,
+    });
+
+    let DataResult = await Model.Usuario.findAll({
+      where: { id: Data.id },
+      include: [
+        {
+          model: Model.Empresa,
+        },
+        {
+          model: Model.TipoUsuario,
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      console.log(Data.id);
+      DataResult.forEach((element) => {
+        DataResult[counter]["dataValues"].Empresa =
+          DataResult[counter]["dataValues"].Empresa["dataValues"];
+        DataResult[counter]["dataValues"].TipoUsuario =
+          DataResult[counter]["dataValues"].TipoUsuario["dataValues"];
+
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        //console.log(DataResult[counter]["dataValues"].Empresa);
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse[0];
+      /**/
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  updateUsuario: async (DataRequest) => {
+    let Data = await Model.Usuario.update(
+      {
+        name: DataRequest.name,
+        email: DataRequest.email,
+        password: DataRequest.password,
+        code: DataRequest.code,
+        photo: DataRequest.photo,
+        empresaId: DataRequest.empresaId,
+        tipoUsuarioId: DataRequest.tipoUsuarioId,
+        situation: DataRequest.situation,
+        state: DataRequest.state,
+      },
+      { where: { id: DataRequest.id } }
+    );
+
+    let DataResult = await Model.Usuario.findAll({
+      where: { id: DataRequest.id },
+      include: [
+        {
+          model: Model.Empresa,
+        },
+        {
+          model: Model.TipoUsuario,
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      console.log(Data.id);
+      DataResult.forEach((element) => {
+        DataResult[counter]["dataValues"].Empresa =
+          DataResult[counter]["dataValues"].Empresa["dataValues"];
+        DataResult[counter]["dataValues"].TipoUsuario =
+          DataResult[counter]["dataValues"].TipoUsuario["dataValues"];
+
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        //console.log(DataResult[counter]["dataValues"].Empresa);
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  //----------------------------------------------------------------
+
+  perfiles: async () => {
+    let Data = await Model.Perfil.findAll({
+      include: [
+        {
+          model: Model.Usuario,
+          include: [
+            {
+              model: Model.TipoUsuario,
+            },
+            {
+              model: Model.Empresa,
+            },
+          ],
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      Data.forEach((element) => {
+        Data[counter]["dataValues"].Usuario =
+          Data[counter]["dataValues"].Usuario["dataValues"];
+
+        DataResponse[counter] = Data[counter]["dataValues"];
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  addPerfil: async (DataRequest) => {
+    let Data = await Model.Perfil.create({
+      description: DataRequest.description,
+      usuarioId: DataRequest.usuarioId,
+    });
+
+    let DataResult = await Model.Perfil.findAll({
+      where: { id: Data.id },
+      include: [
+        {
+          model: Model.Usuario,
+          include: [
+            {
+              model: Model.TipoUsuario,
+            },
+            {
+              model: Model.Empresa,
+            },
+          ],
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      DataResult.forEach((element) => {
+        DataResult[counter]["dataValues"].Usuario =
+          DataResult[counter]["dataValues"].Usuario["dataValues"];
+
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse[0];
     } catch (err) {
       console.log(err);
     }

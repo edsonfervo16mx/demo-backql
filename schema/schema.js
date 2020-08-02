@@ -74,8 +74,18 @@ var schema = buildSchema(`
       photo: String
       empresaId: Int
       Empresa: Empresa
+      TipoUsuario: TipoUsuario
       situacion:String
       state: String
+  }
+
+  type Perfil{
+    id: Int
+    description: String
+    usuarioId: Int
+    Usuario: Usuario
+    situation: String
+    state: String
   }
 
     type Query{
@@ -84,6 +94,7 @@ var schema = buildSchema(`
         tipousuarios: [TipoUsuario]
         privilegios: [Privilegio]
         usuarios: [Usuario]
+        perfiles:[Perfil]
     }
 
     type Mutation{
@@ -95,6 +106,9 @@ var schema = buildSchema(`
         updateTipoUsuario(id: Int,name: String, description: String, badge: String,situation: String, state: String ): TipoUsuario
         addPrivilegio(name: String, description: String, badge: String ): Privilegio
         updatePrivilegio(id: Int, name: String, description: String, badge: String,situation: String, state: String  ): Privilegio
+        addUsuario(name: String, email: String, password: String, code: Int, photo: String, empresaId: Int, tipoUsuarioId: Int): Usuario
+        updateUsuario(id: Int,name: String, email: String, password: String, code: Int, photo: String, empresaId: Int, tipoUsuarioId: Int,situation: String, state: String ): Usuario
+        addPerfil(description: String,usuarioId: Int): Perfil
     }
 
     

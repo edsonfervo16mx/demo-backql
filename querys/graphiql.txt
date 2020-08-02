@@ -237,5 +237,112 @@ mutation {
       name
       description
     }
+    TipoUsuario{
+      id
+      name
+    }
+  }
+}
+
+mutation {
+  addUsuario(
+    name: "Invitacion"
+    email: "fernando@mail.com"
+    password: "123"
+    code: 1024
+    photo: "profile.png"
+    empresaId: 1
+    tipoUsuarioId: 1
+  ) {
+    id
+    name
+    email
+    Empresa{
+      id
+      name
+      description
+    }
+    TipoUsuario{
+      id
+      name
+    }
+  }
+}
+
+mutation {
+  updateUsuario(
+    id: 2
+    name: "fernando"
+    email: "fernando@mail.com"
+    password: "123"
+    code: 1024
+    photo: "profile.png"
+    empresaId: 1
+    tipoUsuarioId: 1
+    situation: "available"
+    state:"active"
+  ) {
+    id
+    name
+    email
+    Empresa{
+      id
+      name
+      description
+    }
+    TipoUsuario{
+      id
+      name
+    }
+  }
+}
+
+{
+  perfiles {
+    id
+    description
+    usuarioId
+    Usuario{
+      id
+      name
+      email
+      Empresa{
+        id
+        name
+      }
+      TipoUsuario{
+        id
+        name
+        description
+      }
+    }
+  }
+}
+
+
+mutation {
+  addPerfil(
+    description: "PREDETERMINADO"
+    usuarioId: 2
+  ) {
+    id
+    description
+    usuarioId
+    situation
+    state
+    Usuario{
+      id
+      name
+      email
+      Empresa{
+        id
+        name
+      }
+      TipoUsuario{
+        id
+        name
+        description
+      }
+    }
   }
 }
