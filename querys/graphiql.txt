@@ -377,3 +377,77 @@ mutation {
     }
   }
 }
+
+
+{
+  reltipousuarioprivilegios{
+    id
+    description
+    tipoUsuarioId
+    TipoUsuario{
+      id
+      name
+      description
+    }
+    privilegioId
+    Privilegio{
+      id
+      name
+      description
+      badge
+    }
+  }
+}
+
+
+mutation {
+  addRelTipoUsuarioPrivilegio(
+    description: "PREDETERMINADO"
+    tipoUsuarioId: 1
+    privilegioId: 1
+  ) {
+    id
+    description
+    tipoUsuarioId
+    TipoUsuario{
+      id
+      name
+      description
+    }
+    privilegioId
+    Privilegio{
+      id
+      name
+      description
+      badge
+    }
+  }
+}
+
+
+mutation {
+  updateRelTipoUsuarioPrivilegio(
+    id: 1
+    description: "PREDETERMINADO EDIT"
+    tipoUsuarioId: 1
+    privilegioId: 1
+    situation: "available"
+    state:"inactive"
+  ) {
+    id
+    description
+    tipoUsuarioId
+    TipoUsuario{
+      id
+      name
+      description
+    }
+    privilegioId
+    Privilegio{
+      id
+      name
+      description
+      badge
+    }
+  }
+}

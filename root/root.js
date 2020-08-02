@@ -567,6 +567,124 @@ var root = {
       console.log(err);
     }
   },
+
+  //----------------------------------------------------------------
+
+  reltipousuarioprivilegios: async () => {
+    let Data = await Model.RelTipoUsuarioPrivilegio.findAll({
+      include: [
+        {
+          model: Model.Privilegio,
+        },
+        {
+          model: Model.TipoUsuario,
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      Data.forEach((element) => {
+        Data[counter]["dataValues"].Privilegio =
+          Data[counter]["dataValues"].Privilegio["dataValues"];
+        Data[counter]["dataValues"].TipoUsuario =
+          Data[counter]["dataValues"].TipoUsuario["dataValues"];
+
+        DataResponse[counter] = Data[counter]["dataValues"];
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  addRelTipoUsuarioPrivilegio: async (DataRequest) => {
+    let Data = await Model.RelTipoUsuarioPrivilegio.create({
+      description: DataRequest.description,
+      tipoUsuarioId: DataRequest.tipoUsuarioId,
+      privilegioId: DataRequest.privilegioId,
+    });
+
+    let DataResult = await Model.RelTipoUsuarioPrivilegio.findAll({
+      where: { id: Data.id },
+      include: [
+        {
+          model: Model.Privilegio,
+        },
+        {
+          model: Model.TipoUsuario,
+        },
+      ],
+    });
+    try {
+      var counter = 0;
+      console.log(Data.id);
+      DataResult.forEach((element) => {
+        DataResult[counter]["dataValues"].Privilegio =
+          DataResult[counter]["dataValues"].Privilegio["dataValues"];
+        DataResult[counter]["dataValues"].TipoUsuario =
+          DataResult[counter]["dataValues"].TipoUsuario["dataValues"];
+
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  updateRelTipoUsuarioPrivilegio: async (DataRequest) => {
+    let Data = await Model.RelTipoUsuarioPrivilegio.update(
+      {
+        description: DataRequest.description,
+        tipoUsuarioId: DataRequest.tipoUsuarioId,
+        privilegioId: DataRequest.privilegioId,
+        situation: DataRequest.situation,
+        state: DataRequest.state,
+      },
+      { where: { id: DataRequest.id } }
+    );
+
+    let DataResult = await Model.RelTipoUsuarioPrivilegio.findAll({
+      where: { id: DataRequest.id },
+      include: [
+        {
+          model: Model.Privilegio,
+        },
+        {
+          model: Model.TipoUsuario,
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      //console.log(Data.id);
+      DataResult.forEach((element) => {
+        DataResult[counter]["dataValues"].Privilegio =
+          DataResult[counter]["dataValues"].Privilegio["dataValues"];
+        DataResult[counter]["dataValues"].TipoUsuario =
+          DataResult[counter]["dataValues"].TipoUsuario["dataValues"];
+
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 
 module.exports = root;
