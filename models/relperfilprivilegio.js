@@ -8,15 +8,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      /*
-      RelPerfilPrivilegio.belongsTo(models.Perfil, {
-        foreignKey: "perfilId",
-      });
-      RelPerfilPrivilegio.belongsTo(models.Privilegio, {
-        foreignKey: "privilegioId",
-      });
-      */
       RelPerfilPrivilegio.belongsTo(models.Privilegio);
       RelPerfilPrivilegio.belongsTo(models.Perfil);
     }

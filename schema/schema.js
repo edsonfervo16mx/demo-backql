@@ -99,6 +99,17 @@ var schema = buildSchema(`
     state: String
   }
 
+  type RelPerfilPrivilegio{
+    id: Int
+    description: String
+    perfilId: Int
+    Perfil: Perfil
+    privilegioId: Int
+    Privilegio: Privilegio
+    situation: String
+    state: String
+  }
+
     type Query{
         empresas: [Empresa]
         invitaciones: [Invitacion]
@@ -107,6 +118,7 @@ var schema = buildSchema(`
         usuarios: [Usuario]
         perfiles:[Perfil]
         reltipousuarioprivilegios: [RelTipoUsuarioPrivilegio]
+        relperfilprivilegios: [RelPerfilPrivilegio]
     }
 
     type Mutation{
@@ -123,7 +135,9 @@ var schema = buildSchema(`
         addPerfil(description: String,usuarioId: Int): Perfil
         updatePerfil(id: Int, description: String,usuarioId: Int,situation: String, state: String): Perfil
         addRelTipoUsuarioPrivilegio(description: String, tipoUsuarioId: Int, privilegioId: Int): RelTipoUsuarioPrivilegio
-        updateRelTipoUsuarioPrivilegio(id: Int,description: String, tipoUsuarioId: Int, privilegioId: Int,,situation: String, state: String): RelTipoUsuarioPrivilegio
+        updateRelTipoUsuarioPrivilegio(id: Int,description: String, tipoUsuarioId: Int, privilegioId: Int,situation: String, state: String): RelTipoUsuarioPrivilegio
+        addRelPerfilPrivilegio(description: String,perfilId: Int,privilegioId: Int ):RelPerfilPrivilegio
+        updateRelPerfilPrivilegio(id: Int, description: String,perfilId: Int,privilegioId: Int,situation: String, state: String ):RelPerfilPrivilegio
     }
 
     

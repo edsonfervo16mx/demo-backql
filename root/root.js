@@ -667,12 +667,125 @@ var root = {
 
     try {
       var counter = 0;
-      //console.log(Data.id);
       DataResult.forEach((element) => {
         DataResult[counter]["dataValues"].Privilegio =
           DataResult[counter]["dataValues"].Privilegio["dataValues"];
         DataResult[counter]["dataValues"].TipoUsuario =
           DataResult[counter]["dataValues"].TipoUsuario["dataValues"];
+
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  //-----------------------------------------------------
+  relperfilprivilegios: async () => {
+    let Data = await Model.RelPerfilPrivilegio.findAll({
+      include: [
+        {
+          model: Model.Perfil,
+        },
+        {
+          model: Model.Privilegio,
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      Data.forEach((element) => {
+        Data[counter]["dataValues"].Privilegio =
+          Data[counter]["dataValues"].Privilegio["dataValues"];
+        Data[counter]["dataValues"].Perfil =
+          Data[counter]["dataValues"].Perfil["dataValues"];
+
+        DataResponse[counter] = Data[counter]["dataValues"];
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  addRelPerfilPrivilegio: async (DataRequest) => {
+    let Data = await Model.RelPerfilPrivilegio.create({
+      description: DataRequest.description,
+      perfilId: DataRequest.perfilId,
+      privilegioId: DataRequest.privilegioId,
+    });
+
+    let DataResult = await Model.RelPerfilPrivilegio.findAll({
+      include: [
+        {
+          model: Model.Perfil,
+        },
+        {
+          model: Model.Privilegio,
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      console.log(Data.id);
+      DataResult.forEach((element) => {
+        DataResult[counter]["dataValues"].Privilegio =
+          DataResult[counter]["dataValues"].Privilegio["dataValues"];
+        DataResult[counter]["dataValues"].Perfil =
+          DataResult[counter]["dataValues"].Perfil["dataValues"];
+
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse[0];
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  updateRelPerfilPrivilegio: async (DataRequest) => {
+    let Data = await Model.RelPerfilPrivilegio.update(
+      {
+        escription: DataRequest.description,
+        perfilId: DataRequest.perfilId,
+        privilegioId: DataRequest.privilegioId,
+        situation: DataRequest.situation,
+        state: DataRequest.state,
+      },
+      { where: { id: DataRequest.id } }
+    );
+
+    let DataResult = await Model.RelPerfilPrivilegio.findAll({
+      where: { id: DataRequest.id },
+      include: [
+        {
+          model: Model.Perfil,
+        },
+        {
+          model: Model.Privilegio,
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      DataResult.forEach((element) => {
+        DataResult[counter]["dataValues"].Privilegio =
+          DataResult[counter]["dataValues"].Privilegio["dataValues"];
+        DataResult[counter]["dataValues"].Perfil =
+          DataResult[counter]["dataValues"].Perfil["dataValues"];
 
         DataResponse[counter] = DataResult[counter]["dataValues"];
         counter++;

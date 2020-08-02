@@ -451,3 +451,77 @@ mutation {
     }
   }
 }
+
+
+{
+  relperfilprivilegios{
+    id
+    description
+    perfilId
+    Perfil{
+      id
+      description
+    }
+    privilegioId
+    Privilegio{
+      id
+      name
+      description
+    }
+    situation
+    state
+  }
+}
+
+
+mutation {
+  addRelPerfilPrivilegio(
+    description: "PREDETERMINADO"
+    perfilId: 1
+    privilegioId: 1
+  ) {
+    id
+    description
+    perfilId
+    Perfil{
+      id
+      description
+    }
+    privilegioId
+    Privilegio{
+      id
+      name
+      description
+    }
+    situation
+    state
+  }
+}
+
+
+mutation {
+  updateRelPerfilPrivilegio(
+    id: 1
+    description: "PREDETERMINADO"
+    perfilId: 1
+    privilegioId: 1
+    situation: "no available"
+    state: "inactive"
+  ) {
+    id
+    description
+    perfilId
+    Perfil{
+      id
+      description
+    }
+    privilegioId
+    Privilegio{
+      id
+      name
+      description
+    }
+    situation
+    state
+  }
+}
