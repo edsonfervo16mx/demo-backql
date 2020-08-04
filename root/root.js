@@ -1,4 +1,7 @@
 var Model = require("../models/index");
+const { sign } = require("jsonwebtoken");
+var randtoken = require("rand-token");
+var refreshTokens = {};
 var DataResponse = [];
 var root = {
   //--------------------------------------------
@@ -569,7 +572,7 @@ var root = {
   },
 
   //----------------------------------------------------------------
-
+  //Agregar Usuario - empresa
   reltipousuarioprivilegios: async () => {
     let Data = await Model.RelTipoUsuarioPrivilegio.findAll({
       include: [
@@ -708,6 +711,7 @@ var root = {
         DataResponse[counter] = Data[counter]["dataValues"];
         counter++;
       });
+
       console.log("**********");
       console.log(DataResponse);
       console.log("*********");
@@ -798,6 +802,74 @@ var root = {
       console.log(err);
     }
   },
+  //-----------------------------------
+  //--------------AUTH-----------------
+  //-----------------------------------
+  /**/
+
+  loginAuth: async (DataRequest) => {
+    console.log("loginAuth...");
+    console.log(DataRequest);
+    console.log(DataRequest.email);
+    console.log(DataRequest.password);
+    if (DataRequest.email != null && DataRequest.password != null) {
+      let Data = await Model.Usuario.findAll({
+        where: { email: DataRequest.email, password: DataRequest.password },
+        include: [
+          {
+            model: Model.Empresa,
+          },
+          {
+            model: Model.TipoUsuario,
+          },
+        ],
+      });
+      try {
+        var counter = 0;
+        var uidToken = randtoken.uid(256);
+        let resultAuth = {};
+        Data.forEach((element) => {
+          DataResponse[counter] = Data[counter]["dataValues"];
+          counter++;
+        });
+        //
+
+        const jsonToken = sign(
+          {
+            res: [
+              DataResponse[0].email,
+              DataResponse[0].password,
+              DataResponse[0].code,
+            ],
+          },
+          "fer1024",
+          {
+            expiresIn: "1h",
+          }
+        );
+        //
+
+        DataResponse[0].token = jsonToken;
+        refreshTokens[uidToken] = DataResponse[0].email + DataResponse[0].code;
+        DataResponse[0].refreshToken = uidToken;
+        DataResponse[0].message = "SUCCESS";
+        resultAuth = DataResponse;
+        console.log(resultAuth);
+        return resultAuth[0];
+        //return Response.json(resultAuth);
+      } catch (err) {
+        console.log(err);
+        return [];
+      }
+    } else {
+      console.log("Acceso denegado");
+      return [];
+    }
+  },
+  /** */
+  //-----------------------------------
+  //--------------AUTH-----------------
+  //-----------------------------------
 };
 
 module.exports = root;

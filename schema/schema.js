@@ -110,6 +110,15 @@ var schema = buildSchema(`
     state: String
   }
 
+  type Auth{
+    email: String
+    code: Int
+    message:String
+    state: String
+    token: String
+    refreshToken: String
+  }
+
     type Query{
         empresas: [Empresa]
         invitaciones: [Invitacion]
@@ -119,9 +128,11 @@ var schema = buildSchema(`
         perfiles:[Perfil]
         reltipousuarioprivilegios: [RelTipoUsuarioPrivilegio]
         relperfilprivilegios: [RelPerfilPrivilegio]
+        auths: [Auth]
     }
 
     type Mutation{
+        loginAuth(email: String, password: String): Auth
         addEmpresa(name: String, description: String, logo: String, location: String, rfc: String, slogan: String, mail: String, telephone: String, website: String): Empresa
         updateEmpresa(id: Int, name: String, description: String, logo: String, location: String, rfc: String, slogan: String, mail: String, telephone: String, website: String, situation: String, state: String): Empresa
         addInvitacion(name: String, expiration: DateTime, empresaId: Int) : Invitacion

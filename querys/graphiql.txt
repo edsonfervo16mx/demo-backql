@@ -525,3 +525,17 @@ mutation {
     state
   }
 }
+
+mutation {
+  loginAuth(
+    email: "fernando@mail.com"
+    password: "123"
+  ) {
+    email
+    code
+    message
+    state
+    token
+    refreshToken
+  }
+}
