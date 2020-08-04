@@ -693,6 +693,16 @@ var root = {
       include: [
         {
           model: Model.Perfil,
+          include: [
+            {
+              model: Model.Usuario,
+              include: [
+                {
+                  model: Model.Empresa,
+                },
+              ],
+            },
+          ],
         },
         {
           model: Model.Privilegio,
@@ -729,9 +739,20 @@ var root = {
     });
 
     let DataResult = await Model.RelPerfilPrivilegio.findAll({
+      where: { id: Data.id },
       include: [
         {
           model: Model.Perfil,
+          include: [
+            {
+              model: Model.Usuario,
+              include: [
+                {
+                  model: Model.Empresa,
+                },
+              ],
+            },
+          ],
         },
         {
           model: Model.Privilegio,
@@ -776,6 +797,16 @@ var root = {
       include: [
         {
           model: Model.Perfil,
+          include: [
+            {
+              model: Model.Usuario,
+              include: [
+                {
+                  model: Model.Empresa,
+                },
+              ],
+            },
+          ],
         },
         {
           model: Model.Privilegio,

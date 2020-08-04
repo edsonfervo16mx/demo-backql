@@ -2,14 +2,12 @@ require("dotenv").config();
 var express = require("express");
 var app = express();
 
-var formidable = require("express-formidable");
+var bodyParser = require("body-parser");
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(
-  formidable({
-    keepExtensions: true,
-    encoding: "utf-8",
-  })
-);
+// parse application/json
+app.use(bodyParser.json());
 
 //Sequelize
 var Model = require("./models/index");
@@ -28,6 +26,7 @@ var root = require("./root/root");
 //JWT
 const { sign } = require("jsonwebtoken");
 var randtoken = require("rand-token");
+const { request } = require("express");
 /*
 const logingMiddleware = (request, response, next) => {
   root.loginAuth(request);
@@ -45,8 +44,9 @@ app.get("/", function(request, response) {
 /** */
 app.post("/login", async function(request, response) {
   console.log("POST/login");
-  console.log(request.fields);
-  let res = await root.loginAuth(request.fields);
+  console.log(request.body.email);
+  console.log(request.body.password);
+  let res = await root.loginAuth(request.body);
   response.json(res);
 });
 /**/
