@@ -24,7 +24,6 @@ app.get("/", function(request, response) {
   console.log(process.env.APP_MESSAGE_SUCCESS);
 });
 
-/** */
 app.post("/login", async function(request, response) {
   console.log("POST/login");
   console.log(request.body.email);
@@ -32,7 +31,6 @@ app.post("/login", async function(request, response) {
   let res = await root.loginAuth(request.body);
   response.status(200).json(res);
 });
-/**/
 
 app.post("/token", async function(request, response) {
   console.log("POST/token");

@@ -3,6 +3,7 @@ const { sign } = require("jsonwebtoken");
 var randtoken = require("rand-token");
 var refreshTokensArray = {};
 var DataResponse = [];
+var CryptoJS = require("crypto-js");
 var root = {
   //--------------------------------------------
   empresas: async () => {
@@ -352,10 +353,16 @@ var root = {
   },
 
   addUsuario: async (DataRequest) => {
+    //Encript
+    let passwordCrypto = CryptoJS.AES.encrypt(
+      DataRequest.password,
+      "161616"
+    ).toString();
+    //
     let Data = await Model.Usuario.create({
       name: DataRequest.name,
       email: DataRequest.email,
-      password: DataRequest.password,
+      password: passwordCrypto,
       code: DataRequest.code,
       photo: DataRequest.photo,
       empresaId: DataRequest.empresaId,
@@ -843,9 +850,27 @@ var root = {
     console.log(DataRequest);
     console.log(DataRequest.email);
     console.log(DataRequest.password);
+
+    /*
+    //Encript
+    let passwordCrypto = CryptoJS.AES.encrypt(
+      DataRequest.password,
+      "161616"
+    ).toString();
+    //
+    console.log("+++++++++++++++++++++++++++++++++++++++");
+    console.log(DataRequest.password);
+    console.log("+++++++++++++++++++++++++++++++++++++++");
+    console.log(passwordCrypto);
+    console.log("+++++++++++++++++++++++++++++++++++++++");
+		//
+		*/
+    let passwordCrypto = CryptoJS.AES.decrypt(DataRequest.password, "161616");
+    let passwordString = passwordCrypto.toString(CryptoJS.enc.Utf8);
+
     if (DataRequest.email != null && DataRequest.password != null) {
-      let Data = await Model.Usuario.findAll({
-        where: { email: DataRequest.email, password: DataRequest.password },
+      let preData = await Model.Usuario.findAll({
+        where: { email: DataRequest.email },
         include: [
           {
             model: Model.Empresa,
@@ -855,48 +880,97 @@ var root = {
           },
         ],
       });
-      try {
-        //console.log(Data);
-        if (Data[0] == null) {
-          console.log("Credenciales invalidas");
-          return [];
-        } else {
-          console.log("Credenciales validas");
-          var uidToken = randtoken.uid(256);
-          let resultAuth = {};
-          var counter = 0;
-          Data.forEach((element) => {
-            DataResponse[counter] = Data[counter]["dataValues"];
-            counter++;
-          });
-          //
+      /*
+      console.log("+++++++++++++++++++++++++++++++++");
+      console.log(preData);
+      console.log("+++++++++++++++++++++++++++++++++");
+      console.log(preData[0]["dataValues"].password);
+			console.log("+++++++++++++++++++++++++++++++++");
+			*/
+      let passwordBDCrypto = CryptoJS.AES.decrypt(
+        preData[0]["dataValues"].password,
+        "161616"
+      );
+      let passwordBDString = passwordBDCrypto.toString(CryptoJS.enc.Utf8);
 
-          const jsonToken = sign(
+      if (
+        DataRequest.email == preData[0]["dataValues"].email &&
+        passwordString == passwordBDString
+      ) {
+        console.log("#################################");
+        console.log("ES IGUAL");
+        console.log(DataRequest.email);
+        console.log(preData[0]["dataValues"].email);
+        console.log(passwordString);
+        console.log(passwordBDString);
+        console.log("#################################");
+        let Data = await Model.Usuario.findAll({
+          where: {
+            email: DataRequest.email,
+            code: preData[0]["dataValues"].code,
+          },
+          include: [
             {
-              res: [
-                DataResponse[0].email,
-                DataResponse[0].password,
-                DataResponse[0].code,
-              ],
+              model: Model.Empresa,
             },
-            "fer1024",
             {
-              expiresIn: "1h",
-            }
-          );
-          //
+              model: Model.TipoUsuario,
+            },
+          ],
+        });
+        try {
+          //console.log(Data);
+          if (Data[0] == null) {
+            console.log("Credenciales invalidas");
+            return [];
+          } else {
+            console.log("Credenciales validas");
+            var uidToken = randtoken.uid(256);
+            let resultAuth = {};
+            var counter = 0;
+            Data.forEach((element) => {
+              DataResponse[counter] = Data[counter]["dataValues"];
+              counter++;
+            });
+            //
 
-          DataResponse[0].token = jsonToken;
-          refreshTokensArray[uidToken] =
-            DataResponse[0].email + DataResponse[0].code;
-          DataResponse[0].refreshToken = uidToken;
-          DataResponse[0].message = "SUCCESS";
-          resultAuth = DataResponse;
-          console.log(resultAuth);
-          return resultAuth[0];
+            const jsonToken = sign(
+              {
+                res: [
+                  DataResponse[0].email,
+                  DataResponse[0].password,
+                  DataResponse[0].code,
+                ],
+              },
+              "fer1024",
+              {
+                expiresIn: "1h",
+              }
+            );
+            //
+
+            DataResponse[0].token = jsonToken;
+            refreshTokensArray[uidToken] =
+              DataResponse[0].email + DataResponse[0].code;
+            DataResponse[0].refreshToken = uidToken;
+            DataResponse[0].message = "SUCCESS";
+            resultAuth = DataResponse;
+            console.log(resultAuth);
+            return resultAuth[0];
+          }
+        } catch (err) {
+          console.log(err);
+          return [];
         }
-      } catch (err) {
-        console.log(err);
+      } else {
+        console.log("#################################");
+        console.log("NO ES IGUAL");
+        console.log(DataRequest.email);
+        console.log(preData[0]["dataValues"].email);
+        console.log(passwordString);
+        console.log(passwordBDString);
+        console.log("#################################");
+        console.log("Acceso denegado");
         return [];
       }
     } else {
