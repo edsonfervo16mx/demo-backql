@@ -405,6 +405,21 @@ var root = {
   },
 
   updateUsuario: async (DataRequest) => {
+    if (DataRequest.password) {
+      //Encript
+      /*
+      let passwordCrypto = CryptoJS.AES.encrypt(
+        DataRequest.password,
+        "161616"
+      ).toString();
+			DataRequest.password = passwordCrypto;
+			*/
+      //
+      let passwordCrypto = CryptoJS.AES.decrypt(DataRequest.password, "161616");
+      let passwordString = passwordCrypto.toString(CryptoJS.enc.Utf8);
+      DataRequest.password = passwordString;
+    }
+
     let Data = await Model.Usuario.update(
       {
         name: DataRequest.name,
