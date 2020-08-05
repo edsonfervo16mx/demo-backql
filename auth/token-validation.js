@@ -10,9 +10,9 @@ module.exports = {
         if (error) {
           console.log("TOKEN INVALIDO");
           response.json({
-            success: 0,
+            state: "fail",
             message: "Invalid token",
-            data: null,
+            dataValues: null,
           });
         } else {
           console.log("TOKEN SUCCESS");
@@ -22,9 +22,9 @@ module.exports = {
     } else {
       console.log("ACCESO DENEGADO");
       response.json({
-        success: 0,
+        state: "fail",
         message: "Access denied! aunautorized user",
-        data: null,
+        dataValues: null,
       });
     }
   },

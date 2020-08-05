@@ -1,7 +1,7 @@
 var Model = require("../models/index");
 const { sign } = require("jsonwebtoken");
 var randtoken = require("rand-token");
-var refreshTokens = {};
+var refreshTokensArray = {};
 var DataResponse = [];
 var root = {
   //--------------------------------------------
@@ -856,38 +856,45 @@ var root = {
         ],
       });
       try {
-        var counter = 0;
-        var uidToken = randtoken.uid(256);
-        let resultAuth = {};
-        Data.forEach((element) => {
-          DataResponse[counter] = Data[counter]["dataValues"];
-          counter++;
-        });
-        //
+        //console.log(Data);
+        if (Data[0] == null) {
+          console.log("Credenciales invalidas");
+          return [];
+        } else {
+          console.log("Credenciales validas");
+          var uidToken = randtoken.uid(256);
+          let resultAuth = {};
+          var counter = 0;
+          Data.forEach((element) => {
+            DataResponse[counter] = Data[counter]["dataValues"];
+            counter++;
+          });
+          //
 
-        const jsonToken = sign(
-          {
-            res: [
-              DataResponse[0].email,
-              DataResponse[0].password,
-              DataResponse[0].code,
-            ],
-          },
-          "fer1024",
-          {
-            expiresIn: "1h",
-          }
-        );
-        //
+          const jsonToken = sign(
+            {
+              res: [
+                DataResponse[0].email,
+                DataResponse[0].password,
+                DataResponse[0].code,
+              ],
+            },
+            "fer1024",
+            {
+              expiresIn: "1h",
+            }
+          );
+          //
 
-        DataResponse[0].token = jsonToken;
-        refreshTokens[uidToken] = DataResponse[0].email + DataResponse[0].code;
-        DataResponse[0].refreshToken = uidToken;
-        DataResponse[0].message = "SUCCESS";
-        resultAuth = DataResponse;
-        console.log(resultAuth);
-        return resultAuth[0];
-        //return Response.json(resultAuth);
+          DataResponse[0].token = jsonToken;
+          refreshTokensArray[uidToken] =
+            DataResponse[0].email + DataResponse[0].code;
+          DataResponse[0].refreshToken = uidToken;
+          DataResponse[0].message = "SUCCESS";
+          resultAuth = DataResponse;
+          console.log(resultAuth);
+          return resultAuth[0];
+        }
       } catch (err) {
         console.log(err);
         return [];
@@ -898,6 +905,81 @@ var root = {
     }
   },
   /** */
+  refreshAuth: async (DataRequest) => {
+    console.log("refreshAuth...");
+    console.log(DataRequest.email);
+    console.log(DataRequest.code);
+    console.log(DataRequest.refreshToken);
+    let resultAuth = {};
+    let Data = await Model.Usuario.findAll({
+      where: { email: DataRequest.email, code: DataRequest.code },
+      include: [
+        {
+          model: Model.Empresa,
+        },
+        {
+          model: Model.TipoUsuario,
+        },
+      ],
+    });
+
+    try {
+      if (Data[0] == null) {
+        console.log("Credenciales invalidas");
+        return [];
+      } else {
+        console.log("Credenciales validas");
+        var counter = 0;
+        Data.forEach((element) => {
+          DataResponse[counter] = Data[counter]["dataValues"];
+          counter++;
+        });
+
+        if (
+          DataRequest.refreshToken in refreshTokensArray &&
+          refreshTokensArray[DataRequest.refreshToken] ==
+            DataRequest.email + DataRequest.code
+        ) {
+          const jsonToken = sign(
+            {
+              res: [
+                DataResponse[0].email,
+                DataResponse[0].password,
+                DataResponse[0].code,
+              ],
+            },
+            "fer1024",
+            {
+              expiresIn: "1h",
+            }
+          );
+          console.log("SUCCESS Auth");
+          DataResponse[0].token = jsonToken;
+          DataResponse[0].message = "SUCCESS";
+          resultAuth = DataResponse;
+          console.log(resultAuth);
+          return resultAuth[0];
+        } else {
+          console.log("FAIL Auth");
+          return [];
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  rejectAuth: async (DataRequest) => {
+    console.log("rejectAuth...");
+    //console.log(DataRequest.refreshToken);
+    let resultAuth = {};
+    if (DataRequest.refreshToken in refreshTokensArray) {
+      delete refreshTokensArray[DataRequest.refreshToken];
+      console.log("Removed");
+    }
+
+    return resultAuth;
+  },
   //-----------------------------------
   //--------------AUTH-----------------
   //-----------------------------------

@@ -15,27 +15,10 @@ var Model = require("./models/index");
 //Express-graphql
 const { graphqlHTTP } = require("express-graphql");
 
-//Graphql
-var { buildSchema } = require("graphql");
-
 //Schema Graphql
 var schema = require("./schema/schema");
 //rootValue Graphql
 var root = require("./root/root");
-
-//JWT
-const { sign } = require("jsonwebtoken");
-var randtoken = require("rand-token");
-const { request } = require("express");
-/*
-const logingMiddleware = (request, response, next) => {
-  root.loginAuth(request);
-  console.log("loginMiddleware...");
-  next();
-};
-/** */
-
-//const { checkToken } = require("./auth/token-validation");
 
 app.get("/", function(request, response) {
   console.log(process.env.APP_MESSAGE_SUCCESS);
@@ -47,14 +30,35 @@ app.post("/login", async function(request, response) {
   console.log(request.body.email);
   console.log(request.body.password);
   let res = await root.loginAuth(request.body);
-  response.json(res);
+  response.status(200).json(res);
 });
 /**/
 
-//app.use(logingMiddleware);
-//app.use(checkToken);
+app.post("/token", async function(request, response) {
+  console.log("POST/token");
+  console.log(request.body.email);
+  console.log(request.body.code);
+  console.log(request.body.refreshToken);
+  let res = await root.refreshAuth(request.body);
+  response.status(200).json(res);
+});
+
+app.post("/token/reject", async function(request, response) {
+  console.log("POST/token/reject");
+  console.log(request.body.refreshToken);
+  let res = await root.rejectAuth(request.body);
+  response.status(200).json({
+    state: "fail",
+    message: "reject token",
+    dataValues: null,
+  });
+});
+
+const { checkToken } = require("./auth/token-validation");
+
 app.use(
   "/graphql",
+  checkToken,
   graphqlHTTP({
     schema: schema,
     rootValue: root,

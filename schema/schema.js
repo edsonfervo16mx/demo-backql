@@ -133,6 +133,8 @@ var schema = buildSchema(`
 
     type Mutation{
         loginAuth(email: String, password: String): Auth
+        refreshAuth(email: String, code: Int, refreshToken: String): Auth
+        rejectAuth(refreshToken: String): Auth
         addEmpresa(name: String, description: String, logo: String, location: String, rfc: String, slogan: String, mail: String, telephone: String, website: String): Empresa
         updateEmpresa(id: Int, name: String, description: String, logo: String, location: String, rfc: String, slogan: String, mail: String, telephone: String, website: String, situation: String, state: String): Empresa
         addInvitacion(name: String, expiration: DateTime, empresaId: Int) : Invitacion
