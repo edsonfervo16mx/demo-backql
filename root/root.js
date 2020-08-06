@@ -354,15 +354,17 @@ var root = {
 
   addUsuario: async (DataRequest) => {
     //Encript
+    /*
     let passwordCrypto = CryptoJS.AES.encrypt(
       DataRequest.password,
       "161616"
-    ).toString();
+		).toString();
+		/**/
     //
     let Data = await Model.Usuario.create({
       name: DataRequest.name,
       email: DataRequest.email,
-      password: passwordCrypto,
+      password: DataRequest.password,
       code: DataRequest.code,
       photo: DataRequest.photo,
       empresaId: DataRequest.empresaId,
@@ -1071,6 +1073,58 @@ var root = {
   },
   //-----------------------------------
   //--------------AUTH-----------------
+  //-----------------------------------
+  //-----------------------------------
+  //-------------SIGNIN----------------
+  //-----------------------------------
+  signin: async (DataRequest) => {
+    let tipoUsuarioId = 1;
+    let Data = await Model.Empresa.create({
+      name: DataRequest.empresa,
+    });
+
+    let DataCreate = await Model.Usuario.create({
+      email: DataRequest.email,
+      password: DataRequest.password,
+      empresaId: Data.id,
+      tipoUsuarioId: tipoUsuarioId,
+    });
+
+    let DataResult = await Model.Usuario.findAll({
+      where: { id: DataCreate.id },
+      include: [
+        {
+          model: Model.Empresa,
+        },
+        {
+          model: Model.TipoUsuario,
+        },
+      ],
+    });
+
+    try {
+      var counter = 0;
+      console.log(Data.id);
+      DataResult.forEach((element) => {
+        DataResult[counter]["dataValues"].Empresa =
+          DataResult[counter]["dataValues"].Empresa["dataValues"];
+        DataResult[counter]["dataValues"].TipoUsuario =
+          DataResult[counter]["dataValues"].TipoUsuario["dataValues"];
+
+        DataResponse[counter] = DataResult[counter]["dataValues"];
+        counter++;
+      });
+      console.log("**********");
+      console.log(DataResponse);
+      console.log("*********");
+      return DataResponse[0];
+      /**/
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  //-----------------------------------
+  //-------------SIGNIN----------------
   //-----------------------------------
 };
 

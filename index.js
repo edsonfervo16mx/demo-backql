@@ -52,6 +52,15 @@ app.post("/token/reject", async function(request, response) {
   });
 });
 
+app.post("/signin", async function(request, response) {
+  console.log("POST/signin");
+  console.log(request.body.email);
+  console.log(request.body.password);
+  console.log(request.body.empresa);
+  let res = await root.signin(request.body);
+  response.status(200).json(res);
+});
+
 const { checkToken } = require("./auth/token-validation");
 
 app.use(
