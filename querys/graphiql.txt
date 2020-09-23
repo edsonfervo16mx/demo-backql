@@ -539,3 +539,27 @@ mutation {
     refreshToken
   }
 }
+
+
+
+
+
+{
+  relperfilprivilegios{
+    id
+    description
+    perfilId
+    Perfil{
+      id
+      description
+    }
+    privilegioId
+    Privilegio{
+      id
+      name
+      description
+    }
+    situation
+    state
+  }
+}

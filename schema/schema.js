@@ -88,7 +88,7 @@ var schema = buildSchema(`
       TipoUsuario: TipoUsuario
       situacion:String
       state: String
-  }
+    }
 
   type Perfil{
     id: Int
@@ -117,6 +117,11 @@ var schema = buildSchema(`
     state: String
     token: String
     refreshToken: String
+  }
+
+  type Esqueleto{
+    id: Int!
+    name: String!
   }
 
     type Query{
